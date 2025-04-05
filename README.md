@@ -1,101 +1,95 @@
-# WindowsTools
+# Prerequisites
 
-Install chocolatey from the instructions given in the link below.
+Untuk mempersiapkan project ini, ada beberapa yang perlu dipersiapkan 
 
-https://chocolatey.org/docs/installation
+## Tools :
+- Chocolatey
+- Git bash
+- Vagrant
+- Oracle virtualbox
+- JDK (java development kit) atau paket java
+- Maven
+- VSCode
+- Sublime Text
+- Intellij (opsional)
+- AWS CLI
+(gambar 1)
+(gambar 2)
 
+## Sign Up :
+- Github
+- Domain Purchase (godaddy)
+- Dockerhub
+- Sonarcloud
+(gambar 3 sign up)
+
+## AWS :
+- Freetier account
+- IAM with MFA
+- Billing Alarm
+- Certificate Setup
+(gambar 4 aws)
+
+
+
+### Install choco with powershell (terminal run as administrator)
+
+fungsinya untuk menginstall software2 dengan mudah seperti halnya apt di ubuntu, menginstall software yang dibutuhkan.
+Sumber web yang saya gunakan bisa dilihat disini :
+```
+https://docs.chocolatey.org/en-us/choco/setup/
+```
+(gambar choco)
+
+```
+Get-ExecutionPolicy
+```
+```
+Set-ExecutionPolicy AllSigned
+```
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+### Install tools with choco
+
+
+virtual box :
 ```
 choco install virtualbox --version=7.1.4 -y
 ```
+vagrant :
 ```
 choco install vagrant --version=2.4.3 -y
 ```
+git :
 ```
 choco install git -y
 ```
+jdk :
 ```
 choco install corretto17jdk -y
 ```
+maven :
 ```
 choco install maven -y
 ```
+awscli :
 ```
 choco install awscli -y
 ```
+intellij (opsional) :
 ```
 choco install intellijidea-community -y
 ```
+vscode :
 ```
 choco install vscode -y
 ```
+sublimetext :
 ```
 choco install sublimetext3 -y
 ```
 
-# MacOS Tools
-
-Install brew from the instructions given in the link below.
-
-
-https://brew.sh/
-
-After installing homebrew
-Create a file in users home directory with name .curlrc with content “-k” 
-(-k without quotes and give a new line character after -k.)
-
-Steps:
-
-1. OpenTerminal
-2. Execute below command
-```
-echo -k > ~/.curlrc
-```
-3. Execute below command to see -k in file ~/.curlrc 
-```
-cat ~/.curlrc
-```
-
-Run all the below commands in Terminal
-
-
-### (virtualbox command is not For MacOs M1/M2)
-```
-brew install --cask virtualbox 
-```
-```
-brew install --cask vagrant
-```
-```
-brew install --cask vagrant-manager
-```
-```
-brew install git
-```
-```
-brew install openjdk@17
-```
-```
-sudo ln -sfn $HOMEBREW_PREFIX/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-```
-```
-exec zsh -l
-```
-```
-brew install maven
-```
-```
-brew install --cask visual-studio-code
-```
-```
-brew install --cask intellij-idea
-```
-```
-brew install --cask intellij-idea-ce
-```
-```
-brew install --cask sublime-text
-```
-```
-brew install awscli
-```
+untuk penginstallan di ubuntu (menggunakan apt dan tidak menggunakan choco), bisa dilihat di branch prereqs.
 

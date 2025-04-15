@@ -1,95 +1,83 @@
-# Prerequisites
+## Tools Prerequisites for CentOS 9, RHEL 9 & Rocky Linux
 
-Untuk mempersiapkan project ini, ada beberapa yang perlu dipersiapkan 
+---
 
-## Tools :
-- Chocolatey
-- Git bash
-- Vagrant
-- Oracle virtualbox
-- JDK (java development kit) atau paket java
-- Maven
-- VSCode
-- Sublime Text
-- Intellij (opsional)
-- AWS CLI
-(gambar 1)
-(gambar 2)
-
-## Sign Up :
-- Github
-- Domain Purchase (godaddy)
-- Dockerhub
-- Sonarcloud
-(gambar 3 sign up)
-
-## AWS :
-- Freetier account
-- IAM with MFA
-- Billing Alarm
-- Certificate Setup
-(gambar 4 aws)
-
-
-
-### Install choco with powershell (terminal run as administrator)
-
-fungsinya untuk menginstall software2 dengan mudah seperti halnya apt di ubuntu, menginstall software yang dibutuhkan.
-Sumber web yang saya gunakan bisa dilihat disini :
-```
-https://docs.chocolatey.org/en-us/choco/setup/
-```
-(gambar choco)
+### Installing VirtualBox
 
 ```
-Get-ExecutionPolicy
-```
-```
-Set-ExecutionPolicy AllSigned
-```
-```
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+sudo yum update
 ```
 
-### Install tools with choco
-
-
-virtual box :
 ```
-choco install virtualbox --version=7.1.4 -y
-```
-vagrant :
-```
-choco install vagrant --version=2.4.3 -y
-```
-git :
-```
-choco install git -y
-```
-jdk :
-```
-choco install corretto17jdk -y
-```
-maven :
-```
-choco install maven -y
-```
-awscli :
-```
-choco install awscli -y
-```
-intellij (opsional) :
-```
-choco install intellijidea-community -y
-```
-vscode :
-```
-choco install vscode -y
-```
-sublimetext :
-```
-choco install sublimetext3 -y
+sudo yum install patch gcc kernel-headers kernel-devel make perl wget -y
 ```
 
-untuk penginstallan di ubuntu (menggunakan apt dan tidak menggunakan choco), bisa dilihat di branch prereqs.
+```
+sudo reboot
+```
 
+Setelah reboot, login kembali dan jalankan:
+
+```
+sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -P /etc/yum.repos.d
+```
+
+```
+sudo yum install VirtualBox-7.1 -y
+```
+
+---
+
+### Installing Vagrant
+
+```
+sudo dnf update -y
+```
+
+```
+sudo dnf config-manager --add-repo=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+```
+
+```
+sudo dnf install vagrant -y
+```
+
+---
+
+### Installing VSCode
+
+```
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+```
+
+```
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+```
+
+```
+dnf check-update
+```
+
+```
+sudo dnf install code -y
+```
+
+---
+
+### Installing Git
+
+```
+sudo dnf install git -y
+```
+
+---
+
+### Installing JDK & Maven
+
+```
+sudo dnf install java-17-openjdk java-17-openjdk-devel -y
+```
+
+```
+sudo dnf install maven-openjdk17 -y
+```

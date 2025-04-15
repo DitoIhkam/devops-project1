@@ -1,0 +1,65 @@
+# Umum
+*.log
+*.tmp
+*.swp
+*.Zone.Identifier
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# File kredensial
+*.pem
+*.key
+*.crt
+*.env
+*.secret
+id_rsa
+id_rsa.pub
+
+# Ansible
+*.retry
+*.vault
+*.cfg~
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+terraform.tfvars
+*.backup
+*.log
+
+# Docker
+**/docker-compose.override.yml
+
+# Python (jika pakai)
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Node.js (jika pakai)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# OS-generated
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Git
+.gitignore
+!.gitignore

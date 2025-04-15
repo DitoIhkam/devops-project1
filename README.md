@@ -1,95 +1,157 @@
-# Prerequisites
+# Tools Prerequisites
 
-Untuk mempersiapkan project ini, ada beberapa yang perlu dipersiapkan 
+Panduan instalasi tools umum untuk **Ubuntu 24.04** dan **CentOS 9 / RHEL9 / Rocky Linux**.
 
-## Tools :
-- Chocolatey
-- Git bash
-- Vagrant
-- Oracle virtualbox
-- JDK (java development kit) atau paket java
-- Maven
-- VSCode
-- Sublime Text
-- Intellij (opsional)
-- AWS CLI
-(gambar 1)
-(gambar 2)
+---
 
-## Sign Up :
-- Github
-- Domain Purchase (godaddy)
-- Dockerhub
-- Sonarcloud
-(gambar 3 sign up)
+## 🐧 Ubuntu 24.04
 
-## AWS :
-- Freetier account
-- IAM with MFA
-- Billing Alarm
-- Certificate Setup
-(gambar 4 aws)
-
-
-
-### Install choco with powershell (terminal run as administrator)
-
-fungsinya untuk menginstall software2 dengan mudah seperti halnya apt di ubuntu, menginstall software yang dibutuhkan.
-Sumber web yang saya gunakan bisa dilihat disini :
-```
-https://docs.chocolatey.org/en-us/choco/setup/
-```
-(gambar choco)
+### 1. Install VirtualBox
 
 ```
-Get-ExecutionPolicy
-```
-```
-Set-ExecutionPolicy AllSigned
-```
-```
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+sudo apt update
 ```
 
-### Install tools with choco
-
-
-virtual box :
 ```
-choco install virtualbox --version=7.1.4 -y
-```
-vagrant :
-```
-choco install vagrant --version=2.4.3 -y
-```
-git :
-```
-choco install git -y
-```
-jdk :
-```
-choco install corretto17jdk -y
-```
-maven :
-```
-choco install maven -y
-```
-awscli :
-```
-choco install awscli -y
-```
-intellij (opsional) :
-```
-choco install intellijidea-community -y
-```
-vscode :
-```
-choco install vscode -y
-```
-sublimetext :
-```
-choco install sublimetext3 -y
+sudo apt install curl wget gnupg2 lsb-release -y
 ```
 
-untuk penginstallan di ubuntu (menggunakan apt dan tidak menggunakan choco), bisa dilihat di branch prereqs.
+```
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vbox.gpg
+```
+
+```
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/oracle_vbox.gpg
+```
+
+```
+echo "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+```
+
+```
+sudo apt update
+```
+
+```
+sudo apt install -y linux-headers-$(uname -r) dkms
+```
+
+```
+sudo apt install virtualbox-7.1 -y
+```
+
+```
+sudo usermod -aG vboxusers $USER
+```
+
+```
+newgrp vboxusers
+```
+
+### 2. Install Vagrant
+
+```
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+````
+
+```
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+````
+
+```
+sudo apt update
+````
+```
+sudo apt install vagrant
+```
+```
+libarchive-dev libarchive-tools -y
+```
+
+### 3. Install Git
+
+```
+sudo apt install git -y
+```
+
+---
+
+### 4. Install JDK 17
+
+```
+sudo apt-get install openjdk-17-jdk -y
+```
+
+---
+
+### 5. Install Maven
+
+```
+sudo apt-get install maven -y
+```
+
+---
+
+### 6. Install VSCode
+
+```
+sudo apt-get install wget gpg -y
+```
+
+```
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+```
+
+```
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+```
+
+```
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+```
+
+```
+rm -f packages.microsoft.gpg
+```
+
+```
+sudo apt install apt-transport-https -y
+```
+
+```
+sudo apt update
+```
+
+```
+sudo apt install code -y
+```
+
+---
+
+### 7. Install Sublime Text
+
+```
+sudo apt update
+```
+
+```
+sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common -y
+```
+
+```
+curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+```
+
+```
+sudo add-apt-repository "deb https://download.sublimetext.com/ apt/stable/"
+```
+
+```
+sudo apt install sublime-text -y
+```
+
+
+
+
+
 

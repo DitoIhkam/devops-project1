@@ -125,37 +125,33 @@ enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, 
 
 ## C. Deploy Website Secara Otomatis dengan Vagrant
 
-Gunakan provisioning shell script dalam Vagrantfile:
-
-```ruby
-config.vm.provision "shell", inline: <<-SHELL
-  yum install -y httpd wget unzip
-  systemctl enable httpd
-  systemctl start httpd
-  cd /tmp
-  wget https://tooplate.com/zip-templates/2135_mini_finance.zip
-  unzip 2135_mini_finance.zip
-  cp -r 2135_mini_finance/* /var/www/html
-  systemctl restart httpd
-SHELL
-```
+Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. screenshot dan filenya ada disini.
 
 (Screenshot konfigurasi dan hasil deploy otomatis)
+(Vagrantfile web auto)
 
 ---
 
 ## D. Instalasi Wordpress di Ubuntu
 
 ### 1. Install Dependencies
-
+pada step ini saya lebih suka menggunakan shell script seperti di screenshot, namun apabila ingin melakukan secara manual bisa menggunakan script berikut :
 ```bash
-sudo apt update
+sudo apt update -y
 sudo apt install apache2 \
                  ghostscript \
                  libapache2-mod-php \
                  mysql-server \
-                 php php-bcmath php-curl php-imagick php-intl \
-                 php-json php-mbstring php-mysql php-xml php-zip
+                 php \
+                 php-bcmath \
+                 php-curl \
+                 php-imagick \
+                 php-intl \
+                 php-json \
+                 php-mbstring \
+                 php-mysql \
+                 php-xml \
+                 php-zip -y
 ```
 
 (Screenshot shell script dan eksekusi)
@@ -167,9 +163,10 @@ sudo mkdir -p /srv/www
 sudo chown www-data: /srv/www
 curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
 ```
+(gambar installasi)
 
 **Apache Configuration:**
-File: `/etc/apache2/sites-available/wordpress.conf`
+buat File ini: `sudo nano /etc/apache2/sites-available/wordpress.conf`
 
 ```apache
 <VirtualHost *:80>
@@ -199,42 +196,58 @@ sudo service apache2 reload
 (Screenshot edit dan reload apache)
 
 ### 3. Konfigurasi Database
+untuk mengkonfigurasinya, kita perlu membuat database di mysql.
 
 ```sql
 sudo mysql -u root
 CREATE DATABASE wordpress;
+show databases; #ini hanya untuk melihat isi database saja
 CREATE USER wordpress@localhost IDENTIFIED BY '<your-password>';
 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;
 FLUSH PRIVILEGES;
 quit;
 ```
-
+(gambar tampilan database)
 (Screenshot tampilan MySQL dan database)
 
 ### 4. Konfigurasi Wordpress
-
+pertama untuk konfigurasinya, kita copy konfigurasi sample yang didapat dari wordpress
 ```bash
 sudo -u www-data cp /srv/www/wordpress/wp-config-sample.php /srv/www/wordpress/wp-config.php
+```
+selanjutnya atur kredensial database didalam file konfigurasi dengan menjalankan command ini. Perlu diketahui disini `<your-password>` perlu diganti dengan password yang kita buat pada step konfigurasi database mysql sebelumnya.
+```
 sudo -u www-data sed -i 's/database_name_here/wordpress/' /srv/www/wordpress/wp-config.php
 sudo -u www-data sed -i 's/username_here/wordpress/' /srv/www/wordpress/wp-config.php
 sudo -u www-data sed -i 's/password_here/<your-password>/' /srv/www/wordpress/wp-config.php
 ```
 
-Edit file:
+terakhir di step ini, edit file di nano dengan perintah ini
 
 ```bash
 sudo -u www-data nano /srv/www/wordpress/wp-config.php
 ```
 
-Ganti bagian key:
+cari kalimat ini
+```
+define( 'AUTH_KEY',         'put your unique phrase here' );
+define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
+define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
+define( 'NONCE_KEY',        'put your unique phrase here' );
+define( 'AUTH_SALT',        'put your unique phrase here' );
+define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
+define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
+define( 'NONCE_SALT',       'put your unique phrase here' );
+```
+hapus semua dengan kalimat diatas dengan ctrl + k, ganti dengan konten di web ini yang mana setiap kali kita klik akan menghasilkan kunci secara acak, berfungsi agar kunci nya susah untuk ditebak. https://api.wordpress.org/secret-key/1.1/salt/
+kalau sudah, keluar dan simpan dari nano/vim. 
 
-* Hapus baris `define(... 'put your unique phrase here')`
-* Ganti dengan output dari: [https://api.wordpress.org/secret-key/1.1/salt/](https://api.wordpress.org/secret-key/1.1/salt/)
+(gambar pengeditan uniq dan web generatenya)
 
 ### 5. Setup Akhir Wordpress
 
-Buka IP VM pada browser dan ikuti wizard untuk menyelesaikan setup WordPress.
-(Screenshot tampilan setup WordPress)
+Step terakhir, kita bisa membuka wordpress melalui IP yang sudah diatur di vagrant, mengatur title, username, password, serta menginstall wordpressnya dan wordpress siap digunakan.
+(gambar2 wordpress)
 
 ---
 

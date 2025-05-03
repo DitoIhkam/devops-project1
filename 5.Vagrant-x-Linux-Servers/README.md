@@ -157,7 +157,7 @@ sudo apt install apache2 \
 (Screenshot shell script dan eksekusi)
 
 ### 2. Install Wordpress dan Konfigurasi Apache
-
+Pada step ini saya membuat folder, mengubah kepemilikan owner dan mendownload wordpress ke lokasi yang saya tentukan
 ```bash
 sudo mkdir -p /srv/www
 sudo chown www-data: /srv/www
@@ -166,8 +166,8 @@ curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
 (gambar installasi)
 
 **Apache Configuration:**
-buat File ini: `sudo nano /etc/apache2/sites-available/wordpress.conf`
-
+buat File ini dengan command berikut: `sudo nano /etc/apache2/sites-available/wordpress.conf`
+> Konfigurasi ini untuk mengatur lokasi documentroot 
 ```apache
 <VirtualHost *:80>
     DocumentRoot /srv/www/wordpress
@@ -197,11 +197,19 @@ sudo service apache2 reload
 
 ### 3. Konfigurasi Database
 untuk mengkonfigurasinya, kita perlu membuat database di mysql.
-
+> Login ke root
 ```sql
 sudo mysql -u root
+```
+> Membuat database dan melihatnya
+```
 CREATE DATABASE wordpress;
-show databases; #ini hanya untuk melihat isi database saja
+```
+```
+show databases; 
+```
+> Membuat user dan password, memberi hak akses command sql kepada wordpress, dan menerapkan semua perubahan
+```
 CREATE USER wordpress@localhost IDENTIFIED BY '<your-password>';
 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;
 FLUSH PRIVILEGES;

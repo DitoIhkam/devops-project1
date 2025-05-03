@@ -3,7 +3,12 @@
 
 # 5. Dokumentasi Vagrant dan Linux Server
 
-Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengaturan IP, CPU, RAM, disk, sinkronisasi direktori, serta proses deploy website baik secara manual maupun otomatis.
+Dokumentasi ini menjelaskan tentang beberapa hal didalam vagrant
+**A. Konfigurasi Vagrant Dasar**
+**B. Deployment Website Secara Manual**
+**C. Deployment Website Secara otomatis**
+**D. Deployment Wordpress di Ubuntu secara manual**
+**E. Deployment Wordpress di Ubuntu secara otomatis**
 
 ---
 
@@ -74,7 +79,9 @@ berikut adalah contoh gambarnya, juga gambar dari konfigurasi spesifikasi, provi
 dan berikut Vagrantfile untuk konfigurasi filenya
 [Vagrantfile-Basic](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-1-Basic)
 
-## B. Deploy Website Secara Manual
+
+---
+## B. Deployment Website Secara Manual
 
 ### 1. Siapkan VM CentOS dengan Vagrant
 
@@ -144,7 +151,11 @@ enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, 
    
    ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.8.unzip-cp-restart.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.9.hasil.png?raw=true)
-## C. Deploy Website Secara Otomatis dengan Vagrant
+
+
+---
+
+## C. Deployment Website Secara Otomatis 
 
 Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. screenshot dan filenya ada disini. [Vagrantfile-WebAuto](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-3-AutoWeb)
 
@@ -152,7 +163,9 @@ Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. 
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/3.2.Auto-Web.png.png?raw=true)
 
 
-## D. Instalasi Wordpress di Ubuntu
+---
+
+## D. Deployment Wordpress di Ubuntu secara manual
 
 ### 1. Install Dependencies
 pada step ini saya lebih suka menggunakan shell script seperti di screenshot, namun apabila ingin melakukan secara manual bisa menggunakan script berikut :
@@ -289,9 +302,11 @@ Step terakhir, kita bisa membuka wordpress melalui IP yang sudah diatur di vagra
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.9.tampilan-wordpress.png?raw=true)
 
 
-## E. Penutup
+---
 
-Semua proses di atas bisa diotomasi menggunakan Vagrant provisioning dengan shell script. Lampiran kode dan screenshot bisa dilihat di bagian akhir. [Vagantfile-AutoWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-5-AutoWordpress)
+## E. Install Wordpress di ubuntu secara otomatis
+
+Semua proses di atas bisa diotomasi menggunakan Vagrant provisioning dengan shell script. Lampiran kode dan screenshot bisa dilihat di bagian akhir dan apabila sudah ada file otomatisasi ini hanya tinggal melakukan vagrant up. [Vagantfile-AutoWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-5-AutoWordpress)
 
 
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.92.config-word-auto.png?raw=true)

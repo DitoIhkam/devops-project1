@@ -5,9 +5,13 @@
 
 Dokumentasi ini menjelaskan tentang beberapa hal didalam vagrant
 **A. Konfigurasi Vagrant Dasar**
+
 **B. Deployment Website Secara Manual**
+
 **C. Deployment Website Secara otomatis**
+
 **D. Deployment Wordpress di Ubuntu secara manual**
+
 **E. Deployment Wordpress di Ubuntu secara otomatis**
 
 ---

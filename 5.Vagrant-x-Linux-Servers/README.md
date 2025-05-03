@@ -83,9 +83,9 @@ dan berikut Vagrantfile untuk konfigurasi filenya
 
      * Private atur ip misal 192.168.56.22 dan Public Network seperti yang sudah dijelaskan sebelumnya.
      * `vb.name = "4.WebsiteManual"`, `vb.memory = 2048` (atau 1024), `vb.cpus = 1`
-berikut untuk Vagrantfile website manual, setelah download agar bisa digunakan, ganti namanya dengan vagrantfile
+berikut untuk Vagrantfile website manual, setelah download agar bisa digunakan, ganti namanya dengan vagrantfile [Vagrantfile-ManualWebsite](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-2-ManualWeb)
 
-[Vagrantfile-ManualWebsite](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-2-ManualWeb)
+
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.1.konfigurasi-web-man.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.2.konfigurasi-web-man.png?raw=true)
 
@@ -140,14 +140,14 @@ enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, 
    Pastikan firewall mati atau port 80 terbuka.
    Lalu website bisa diakses menggunakan ip di browser
    (gambar ekstrak file dan restart website serta hasil)
+
+   
    ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.8.unzip-cp-restart.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.9.hasil.png?raw=true)
 ## C. Deploy Website Secara Otomatis dengan Vagrant
 
-Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. screenshot dan filenya ada disini.
+Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. screenshot dan filenya ada disini. [Vagrantfile-WebAuto](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-3-AutoWeb)
 
-
-[Vagrantfile-WebAuto](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-3-AutoWeb)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/3.1.Auto-Web.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/3.2.Auto-Web.png.png?raw=true)
 
@@ -178,8 +178,7 @@ sudo apt install apache2 \
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.1.install-dependencies.png?raw=true)
 
 *Tambahan 
-berikut untuk vagrantfile yang saya gunakan yang belum sempat saya dokumentasikan prosesnya
-[Vagrantfile-ManualWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-4-ManualWordpress)
+berikut untuk vagrantfile yang saya gunakan yang belum sempat saya dokumentasikan prosesnya [Vagrantfile-ManualWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-4-ManualWordpress)
 
 ### 2. Install Wordpress dan Konfigurasi Apache
 Pada step ini saya membuat folder, mengubah kepemilikan owner dan mendownload wordpress ke lokasi yang saya tentukan
@@ -292,10 +291,10 @@ Step terakhir, kita bisa membuka wordpress melalui IP yang sudah diatur di vagra
 
 ## E. Penutup
 
-Semua proses di atas bisa diotomasi menggunakan Vagrant provisioning dengan shell script. Lampiran kode dan screenshot bisa dilihat di bagian akhir.
+Semua proses di atas bisa diotomasi menggunakan Vagrant provisioning dengan shell script. Lampiran kode dan screenshot bisa dilihat di bagian akhir. [Vagantfile-AutoWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-5-AutoWordpress)
 
 
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.92.config-word-auto.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.93.config-word-auto.png.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.94.config-word-auto.png.png?raw=true)
-[Vagantfile-AutoWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-5-AutoWordpress)
+

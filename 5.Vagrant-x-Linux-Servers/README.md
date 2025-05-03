@@ -4,6 +4,7 @@
 # 5. Dokumentasi Vagrant dan Linux Server
 
 Dokumentasi ini menjelaskan tentang beberapa hal didalam vagrant
+
 **A. Konfigurasi Vagrant Dasar**
 
 **B. Deployment Website Secara Manual**

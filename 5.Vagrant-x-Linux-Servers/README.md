@@ -9,7 +9,7 @@ Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengat
 
 ## A. Konfigurasi Vagrant Dasar
 
-1. **Cek Box Tersedia**
+### 1. Cek Box Tersedia
    Gunakan perintah berikut untuk melihat daftar box yang tersedia:
 
    ```bash
@@ -18,7 +18,7 @@ Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengat
    
 > tersedia ubuntu 20 atau ubuntu/focal64
 
-2. **Inisialisasi Box**
+### 2. Inisialisasi Box
    Gunakan perintah:
 
    ```bash
@@ -29,16 +29,17 @@ Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengat
 (gambar website vagrant cloud dan box yang sudah tersedia didalam host)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.1.vagrant-box-dan-cloud.png?raw=true)
 
-3. **Struktur Dasar Vagrantfile**
+### 3. Struktur Dasar Vagrantfile
 Setelah melakukan vagrant init, akan muncul Vagrantfile dengan konfigurasi dasar dari vagrant, disini saya akan menjelaskan, melakukan beberapa tambahan dan perubahan konfigurasi. :
    * `Vagrant.configure("2") do |config|`: Mengatur konfigurasi dengan vagrant versi 2.
    * `config.vm.box = "focal64"`: Menentukan OS box. focal64 bisa disesuaikan dengan OS yang diinginkan di vagrant cloud/vagrant box list.
    * `config.vm.network "private_network", ip: "192.168.56.14"`: Menentukan jenis network dan IP-nya. bisa dengan NAT (hanya internet saja) atau ditambah dengan bridge/public netowrk
 
 (gambar konfigurasi vagrantfile)
+
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.2.network-config.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.4.config-last.png?raw=true)
-4. **Spesifikasi VM (CPU, RAM, Disk, Nama)**
+### 4. Spesifikasi VM (CPU, RAM, Disk, Nama)
 didalam menentukan nama yang tertera di virtual box, ram, cpu, juga disk mereka harus berada didalam blok vm.provider seperti ini
 
 * Ralat :
@@ -51,7 +52,7 @@ untuk pengaturan Disk, perlu plugin tambahan agar disk nya bisa diatur.
    end
    ```
 
-6. **Provisioning**
+### 5. Provisioning
    Bisa menambahkan script provisioning untuk update/install2. Jangan sampai ada konfirmasi ketika provisioning, beberapa command yang perlu verifikasi biasanya diikuti dengan command -y:
 
 ```ruby
@@ -60,19 +61,22 @@ untuk pengaturan Disk, perlu plugin tambahan agar disk nya bisa diatur.
     apt-get install -y apache2
   SHELL
   ```
-7. **Sync Directories**
-	Pada dasarnya direktori yang ada Vagrantfile tempat kita membuat vm dengan `vagrant up`, dengan direktori vm yang sudah di buat dengan `vagrant up`, akan tersambung direktorinya di /vagrant. Fungsinya untuk copy paste antara vm dengan host ataupun sebaliknya. Direktori yang terhubung pun bisa diatur antara host dan vm mau terhubung lewat direktori mana dengan konfigurasi berikut :
+### 6. Sync Directories
+
+Pada dasarnya direktori yang ada Vagrantfile tempat kita membuat vm dengan `vagrant up`, dengan direktori vm yang sudah di buat dengan `vagrant up`, akan tersambung direktorinya di /vagrant. Fungsinya untuk copy paste antara vm dengan host ataupun sebaliknya. Direktori yang terhubung pun bisa diatur antara host dan vm mau terhubung lewat direktori mana dengan konfigurasi berikut :
 ```
 config.vm.synced_folder "F:\\scripts\\shellscripts", "/opt/scripts"
 ```
+
 berikut adalah contoh gambarnya, juga gambar dari konfigurasi spesifikasi, provisioning, maupun sync directories.
+
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.3.sync-dir.png?raw=true)
 dan berikut Vagrantfile untuk konfigurasi filenya
 [Vagrantfile-Basic](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-1-Basic)
 
 ## B. Deploy Website Secara Manual
 
-1. **Siapkan VM CentOS dengan Vagrant**
+### 1. Siapkan VM CentOS dengan Vagrant
 
    * Gunakan `vagrant init centos/8` atau centos/9
    * Edit Vagrantfile:
@@ -85,11 +89,11 @@ berikut untuk Vagrantfile website manual, setelah download agar bisa digunakan, 
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.1.konfigurasi-web-man.png?raw=true)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.2.konfigurasi-web-man.png?raw=true)
 
-2. **Download Template Website**
+### 2. Download Template Website
    Masuk ke folder /tmp dengan command `cd /tmp` agar file hanya berada  sementara zip nya.
    Unduh file dari host windows dan copy melalui sync direktori yang terhubung dengan vm. Lalu dari vm bisa masuk ke direktori /vagrant dan copy paste ke /tmp. berikut webnya. [Tooplate - Mini Finance](https://www.tooplate.com/view/2135-mini-finance)
 bisa copy paste menggunakan sync directories atau lainnya
-3. **Mengambil Link Download (Opsional via DevTools)**
+### 3. Mengambil Link Download (Opsional via DevTools)
    * Opsi ini dilakukan setelah melakukan `vagrant up` dan didalam vm
    * Buka F12 > Tab Network
    * Klik tombol download, salin link, lalu `wget` di VM:
@@ -100,15 +104,18 @@ bisa copy paste menggunakan sync directories atau lainnya
 (gambar pengambilan link download linux via brave browser)
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.3.network-brave.png?raw=true)
 
-4. **Ubah Hostname dan logout serta login lagi untuk perubahan**
+### 4. Ubah Hostname
 
    ```bash
    sudo hostnamectl set-hostname finance
    exec bash
    ```
 (gambar download link serta penggantian hostname)
+
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.6.jalan.png?raw=true)
-5. **Install Apache & Tools serta jalankan httpd**
+
+
+### 5. Install Apache & Tools serta jalankan httpd
 
    ```bash
    sudo yum install httpd wget unzip vim nano zip -y
@@ -122,7 +129,7 @@ bisa copy paste menggunakan sync directories atau lainnya
 enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, httpd akan jalan secara otomatis
 
 ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.7.httpd-service.png?raw=true)
-6. **Deploy Website**
+### 6. Deploy Website
 
    ```bash
    unzip 2135_mini_finance.zip

@@ -1,3 +1,5 @@
+![alt text](?raw=true)
+
 # 5. Dokumentasi Vagrant dan Linux Server
 
 Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengaturan IP, CPU, RAM, disk, sinkronisasi direktori, serta proses deploy website baik secara manual maupun otomatis.
@@ -24,6 +26,7 @@ Dokumentasi ini menjelaskan konfigurasi menggunakan Vagrantfile, termasuk pengat
 
 Alternatif : cari box dari Vagrant Cloud dan gunakan dokumentasi yang tertera di sana untuk initialize vagrantfile melalui link ini `https://portal.cloud.hashicorp.com/vagrant/discover`
 (1.gambar box list dan vagrant cloud focal64)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.1.vagrant-box-dan-cloud.png?raw=true)
 
 3. **Struktur Dasar Vagrantfile**
 Setelah melakukan vagrant init, akan muncul Vagrantfile dengan konfigurasi dasar dari vagrant, disini saya akan menjelaskan, melakukan beberapa tambahan dan perubahan konfigurasi. :
@@ -32,7 +35,7 @@ Setelah melakukan vagrant init, akan muncul Vagrantfile dengan konfigurasi dasar
    * `config.vm.network "private_network", ip: "192.168.56.14"`: Menentukan jenis network dan IP-nya. bisa dengan NAT (hanya internet saja) atau ditambah dengan bridge/public netowrk
 
 (2.gambar konfigurasi nya ntr tambahin komen private nat, private local dan bridge)
-
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.2.network-config.png?raw=true)
 4. **Spesifikasi VM (CPU, RAM, Disk, Nama)**
 didalam menentukan nama yang tertera di virtual box, ram, cpu, juga disk mereka harus berada didalam blok vm.provider seperti ini
    ```ruby
@@ -62,8 +65,9 @@ berikut adalah contoh gambarnya, juga gambar dari konfigurasi spesifikasi, provi
 (3.gambar sync directories contoh)
 (4.gambar config)
 (1.5 Vagrantfile basic)
-
----
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.3.sync-dir.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/1.4.config-last.png?raw=true)
+[Vagrantfile-Basic](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-1-Basic)
 
 ## B. Deploy Website Secara Manual
 
@@ -76,6 +80,9 @@ berikut adalah contoh gambarnya, juga gambar dari konfigurasi spesifikasi, provi
      * `vb.name = "4.WebsiteManual"`, `vb.memory = 2048` (atau 1024), `vb.cpus = 1`
 (berikut untuk Vagrantfile website manual, setelah download agar bisa digunakan, ganti namanya dengan vagrantfile)
 (screenshot konfigurasi vagrantfile)
+[Vagrantfile-ManualWebsite](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-2-ManualWeb)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.1.konfigurasi-web-man.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.2.konfigurasi-web-man.png?raw=true)
 
 2. **Download Template Website**
    Masuk ke folder /tmp dengan command `cd /tmp` agar file hanya berada  sementara zip nya.
@@ -90,6 +97,7 @@ bisa copy paste menggunakan sync directories atau lainnya
      wget https://www.tooplate.com/zip-templates/2135_mini_finance.zip
      ```
 (gambar network brave)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.3.network-brave.png?raw=true)
 
 4. **Ubah Hostname dan logout serta login lagi untuk perubahan**
 
@@ -98,6 +106,7 @@ bisa copy paste menggunakan sync directories atau lainnya
    exec bash
    ```
 (screenshot konfigurasi hostname)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.6.jalan.png?raw=true)
 5. **Install Apache & Tools serta jalankan httpd**
 
    ```bash
@@ -111,6 +120,7 @@ bisa copy paste menggunakan sync directories atau lainnya
    ```
 enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, httpd akan jalan secara otomatis
 (ss instalasi dan start httpd serta enable)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.7.httpd-service.png?raw=true)
 6. **Deploy Website**
 
    ```bash
@@ -122,15 +132,17 @@ enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, 
    Pastikan firewall mati atau port 80 terbuka.
    Lalu website bisa diakses menggunakan ip di browser
    (gambar)
-
+   ![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.8.unzip-cp-restart.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/2.9.hasil.png?raw=true)
 ## C. Deploy Website Secara Otomatis dengan Vagrant
 
 Gunakan provisioning shell script dalam Vagrantfile, lalu tinggal `vagrant up`. screenshot dan filenya ada disini.
 
 (Screenshot konfigurasi dan hasil deploy otomatis)
-(Vagrantfile web auto)
+[Vagrantfile-WebAuto](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-3-AutoWeb)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/3.1.Auto-Web.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/3.2.Auto-Web.png.png?raw=true)
 
----
 
 ## D. Instalasi Wordpress di Ubuntu
 
@@ -155,6 +167,7 @@ sudo apt install apache2 \
 ```
 
 (Screenshot shell script dan eksekusi)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.1.install-dependencies.png?raw=true)
 
 ### 2. Install Wordpress dan Konfigurasi Apache
 Pada step ini saya membuat folder, mengubah kepemilikan owner dan mendownload wordpress ke lokasi yang saya tentukan
@@ -164,6 +177,11 @@ sudo chown www-data: /srv/www
 curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
 ```
 (gambar installasi)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.2.Install-Wordpress.png?raw=true)
+
+*Tambahan 
+berikut untuk vagrantfile yang saya gunakan yang belum sempat saya dokumentasikan prosesnya
+[Vagrantfile-ManualWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-4-ManualWordpress)
 
 **Apache Configuration:**
 buat File ini dengan command berikut: `sudo nano /etc/apache2/sites-available/wordpress.conf`
@@ -194,6 +212,7 @@ sudo service apache2 reload
 ```
 
 (Screenshot edit dan reload apache)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.3.konfigurasi-apache-dan-start-wordpress.png?raw=true)
 
 ### 3. Konfigurasi Database
 untuk mengkonfigurasinya, kita perlu membuat database di mysql.
@@ -208,15 +227,17 @@ CREATE DATABASE wordpress;
 ```
 show databases; 
 ```
-> Membuat user dan password, memberi hak akses command sql kepada wordpress, dan menerapkan semua perubahan
+> Membuat user dan password, memberi hak akses command sql kepada wordpress, dan menerapkan semua perubahan. JANGAN LUPA UNTUK MENGGANTI '<your-password>' dengan password anda
 ```
-CREATE USER wordpress@localhost IDENTIFIED BY '<your-password>';
+CREATE USER 'wordpress'@'localhost' IDENTIFIED BY '<your-password>';
 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;
 FLUSH PRIVILEGES;
 quit;
 ```
 (gambar tampilan database)
 (Screenshot tampilan MySQL dan database)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.4.konfigurasi.database.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.5.konfigurasi-database.png?raw=true)
 
 ### 4. Konfigurasi Wordpress
 pertama untuk konfigurasinya, kita copy konfigurasi sample yang didapat dari wordpress
@@ -229,7 +250,7 @@ sudo -u www-data sed -i 's/database_name_here/wordpress/' /srv/www/wordpress/wp-
 sudo -u www-data sed -i 's/username_here/wordpress/' /srv/www/wordpress/wp-config.php
 sudo -u www-data sed -i 's/password_here/<your-password>/' /srv/www/wordpress/wp-config.php
 ```
-
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.6.wp-config-php.png?raw=true)
 terakhir di step ini, edit file di nano dengan perintah ini
 
 ```bash
@@ -251,16 +272,23 @@ hapus semua dengan kalimat diatas dengan ctrl + k, ganti dengan konten di web in
 kalau sudah, keluar dan simpan dari nano/vim. 
 
 (gambar pengeditan uniq dan web generatenya)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.91.ketinggalan-generate-key.png?raw=true)
+
 
 ### 5. Setup Akhir Wordpress
 
 Step terakhir, kita bisa membuka wordpress melalui IP yang sudah diatur di vagrant, mengatur title, username, password, serta menginstall wordpressnya dan wordpress siap digunakan.
-(gambar2 wordpress)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.7.sign-up-wordpress.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.8.login-wordpress.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.9.tampilan-wordpress.png?raw=true)
 
----
 
 ## E. Penutup
 
 Semua proses di atas bisa diotomasi menggunakan Vagrant provisioning dengan shell script. Lampiran kode dan screenshot bisa dilihat di bagian akhir.
 
 (Script provisioning otomatis + screenshot hasilnya)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.92.config-word-auto.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.93.config-word-auto.png.png?raw=true)
+![alt text](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/images/4.94.config-word-auto.png.png?raw=true)
+[Vagantfile-AutoWordpress](https://github.com/DitoIhkam/vprofile/blob/learn-devops/5.Vagrant-x-Linux-Servers/Vagrantfile-5-AutoWordpress)

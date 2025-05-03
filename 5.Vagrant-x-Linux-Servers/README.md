@@ -61,58 +61,67 @@ config.vm.synced_folder "F:\\scripts\\shellscripts", "/opt/scripts"
 berikut adalah contoh gambarnya, juga gambar dari konfigurasi spesifikasi, provisioning, maupun sync directories
 (3.gambar sync directories contoh)
 (4.gambar config)
+(1.5 Vagrantfile basic)
 
 ---
 
 ## B. Deploy Website Secara Manual
 
-1. **Download Template Website**
-   Unduh dari [Tooplate - Mini Finance](https://www.tooplate.com/view/2135-mini-finance)
-bisa copy paste menggunakan sync directories atau lainnya
-2. **Mengambil Link Download (Opsional via DevTools)**
+1. **Siapkan VM CentOS dengan Vagrant**
 
+   * Gunakan `vagrant init centos/8` atau centos/9
+   * Edit Vagrantfile:
+
+     * Private atur ip misal 192.168.56.22 dan Public Network seperti yang sudah dijelaskan sebelumnya.
+     * `vb.name = "4.WebsiteManual"`, `vb.memory = 2048` (atau 1024), `vb.cpus = 1`
+(berikut untuk Vagrantfile website manual, setelah download agar bisa digunakan, ganti namanya dengan vagrantfile)
+(screenshot konfigurasi vagrantfile)
+
+2. **Download Template Website**
+   Masuk ke folder /tmp dengan command `cd /tmp` agar file hanya berada  sementara zip nya.
+   Unduh file dari host windows dan copy melalui sync direktori yang terhubung dengan vm. Lalu dari vm bisa masuk ke direktori /vagrant dan copy paste ke /tmp. berikut webnya. [Tooplate - Mini Finance](https://www.tooplate.com/view/2135-mini-finance)
+bisa copy paste menggunakan sync directories atau lainnya
+3. **Mengambil Link Download (Opsional via DevTools)**
+   * Opsi ini dilakukan setelah melakukan `vagrant up` dan didalam vm
    * Buka F12 > Tab Network
    * Klik tombol download, salin link, lalu `wget` di VM:
 
      ```bash
-     wget -O /tmp/template.zip "<link-to-zip>"
+     wget https://www.tooplate.com/zip-templates/2135_mini_finance.zip
      ```
 (gambar network brave)
-3. **Siapkan VM CentOS dengan Vagrant**
-
-   * Gunakan `vagrant init centos/7` atau centos/8
-   * Edit Vagrantfile:
-
-     * Private atur ip misal 192.168.56.22 dan Public Network seperti yang sudah dijelaskan sebelumnya.
-     * `vb.name = "finance"`, `vb.memory = 2048` (atau 1024), `vb.cpus = 1`
 
 4. **Ubah Hostname dan logout serta login lagi untuk perubahan**
 
    ```bash
    sudo hostnamectl set-hostname finance
-   logout
+   exec bash
    ```
-
-5. **Install Apache & Tools**
+(screenshot konfigurasi hostname)
+5. **Install Apache & Tools serta jalankan httpd**
 
    ```bash
    sudo yum install httpd wget unzip vim nano zip -y
+   ```
+   ```
    sudo systemctl start httpd
+   ```
+   ```
    sudo systemctl enable httpd
    ```
-
+enable berfungsi untuk mengaktifkan systemd untuk httpd agar ketika restart vm, httpd akan jalan secara otomatis
+(ss instalasi dan start httpd serta enable)
 6. **Deploy Website**
 
    ```bash
-   unzip /tmp/template.zip -d /tmp
-   sudo cp -r /tmp/<folder-template>/* /var/www/html
+   unzip 2135_mini_finance.zip
+   sudo cp -r /tmp/2135_mini_finance/* /var/www/html
    sudo systemctl restart httpd
    sudo systemctl status httpd
    ```
-
    Pastikan firewall mati atau port 80 terbuka.
-
----
+   Lalu website bisa diakses menggunakan ip di browser
+   (gambar)
 
 ## C. Deploy Website Secara Otomatis dengan Vagrant
 

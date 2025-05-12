@@ -2,25 +2,35 @@
 # Introduction
 
 This document provides a step-by-step guide to provision multiple services in a virtual environment using Vagrant and VirtualBox. The environment includes several services like:
+
 **1. Mariadb**
+
 **2. Memcache**
+
 **3. RabbitMQ**
+
 **4. Tomcat**
+
 **5. Nginx.**
+
 All services will be configured manually, in a specific order, to simulate a real production-like application infrastructure. Once the manual steps are well understood, the configured will be automated. 
 
 ![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/000.png?raw=true)
 
 # Prerequisite
+
 **1. Oracle VM Virtualbox**
+
 **2. Vagrant**
+
 **3. Vagrant Plugins**
 
 Execute below command in your computer (i'm using git bash) to install hostmanager plugin
 ```
 vagrant plugin instlal vagrant-hostmanager
 ```
-4. Git Bash
+
+**4. Git Bash**
 
 # VM Setup
 **1. Clone Source Code `https://github.com/DitoIhkam/devops-project1`**  
@@ -201,6 +211,8 @@ dnf update -y
 sudo dnf install epel-release -y
 ```
 
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/2.1.DNF-UPDATE-MC01.png?raw=true)
+
 (gambar login, etc host, dan dnf update)(gaada etc host wkwkkw)
 
 ### Install, start, and enable Memcached on port 11211
@@ -208,6 +220,8 @@ sudo dnf install epel-release -y
 ```
 sudo dnf install memcached -y
 ```
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/2.2.Install-Memcache.png?raw=true)
 
 (gambar install memcache)
 
@@ -242,7 +256,10 @@ sudo systemctl restart memcached
 sudo memcached -p 11211 -U 11111 -u memcached -d
 ```
 
-(gambar dari start enable sampe akhir)
+(start enable until the end)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/2.3.Start-enable-status-configip.png?raw=true)
+
 # 3. RabbitMQ Setup
 
 ### Login to the rabbitmq vm and login into root user
@@ -253,6 +270,9 @@ vagrant ssh rmq01
 ```
 sudo -i
 ```
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/3.1.DNF-UPPDATE-RMQ01.png?raw=true)
+
 
 ### Verifiy the host entry
 
@@ -277,19 +297,25 @@ dnf install wget -y
 dnf -y install centos-release-rabbitmq-38
 ```
 
-(gambar install wget dan rabbit)
+(image of install wget and rabbit)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/3.2.Install-wget-rabbit.png?raw=true)
 
 ```
 dnf --enablerepo=centos-rabbitmq-38 -y install rabbitmq-server
 ```
 
-9gambar install repo rabibt
+image of install repo rabbit
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/3.3.Enable-repo-rabbit.png?raw=true)
 
 ```
 systemctl enable --now rabbitmq-server
 ```
 
-(gambar enable)
+(image of enable rabbitmq in systemd)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/3.4.Enable-systemd.png?raw=true)
 
 ### Setup Access to user test
 
@@ -311,9 +337,14 @@ sudo systemctl restart rabbitmq-server
 ```
 sudo systemctl status rabbitmq
 ```
-(1 gambar aja ampe tuntas)
+
+(image of Setup access)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/3.5.Setup-access-user.png?raw=true)
 
 # 4. Tomcat
+
+### Login ssh to vm and verify hosts and update OS also
 
 ```
 vagrant ssh app01
@@ -327,12 +358,27 @@ dnf update -y
 ```
 dnf install epel-release -y
 ```
+
+(image of dnf update)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.1.DNF-UPDATE-APP01.png?raw=true)
+
+### Install Java and wget
+
+
 ```
 dnf -y install java-17-openjdk java-17-openjdk-devel
 ```
 ```
 dnf install git wget -y
 ```
+
+(image of install java and wget)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.2.Install-java-wget.png?raw=true)
+
+### Download and add user
+
 ```
 cd /tmp/
 ```
@@ -342,10 +388,83 @@ wget https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.26/bin/apache-tomcat
 ```
 tar xzvf apache-tomcat-10.1.26.tar.gz
 ```
+
+
+(image of download and untar)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.3.cdtmp-wget-tar.png?raw=true)
+
+### Add User tomcat
+
 ```
 useradd --home-dir /usr/local/tomcat --shell /sbin/nologin tomcat
 ```
 
+### Copy data to tomcat home dir
+
+```
+cp -r /tmp/apache-tomcat-10.1.26/* /usr/local/tomcat/
+```
+
+### Make tomcat user owner of tomcat home dir
+```
+chown -R tomcat.tomcat /usr/local/tomcat
+
+```
+
+
+### Setup systemctl command for tomcat
+
+```
+nano  /etc/systemd/system/tomcat.service
+```
+
+Update the file with below content
+
+```
+[Unit]
+Description=Tomcat
+After=network.target
+
+[Service]
+User=tomcat
+Group=tomcat
+WorkingDirectory=/usr/local/tomcat
+Environment=JAVA_HOME=/usr/lib/jvm/jre
+Environment=CATALINA_PID=/var/tomcat/%i/run/tomcat.pid
+Environment=CATALINA_HOME=/usr/local/tomcat
+Environment=CATALINA_BASE=/usr/local/tomcat
+ExecStart=/usr/local/tomcat/bin/catalina.sh run
+ExecStop=/usr/local/tomcat/bin/shutdown.sh
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+(image of config edit)
+
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.5.konfig-pengeditan.png?raw=true)
+
+
+
+### Reload, start, and enable tomcat
+
+```
+systemctl daemon-reload
+```
+```
+systemctl start tomcat
+```
+```
+systemctl enable tomcat
+```
+
+(image from useradd to enable)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.4.Useradd-sampeabis.png?raw=true)
 
 ---
 # Code Build and Deploy (App01)
@@ -366,11 +485,21 @@ cp -r apache-maven-3.9.9 /usr/local/maven3.9
 ```
 export MAVEN_OPTS="-Xmx512m"
 ```
+
+image of setup
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.7-codebuild-cdtmp-down-unzip.png?raw=true)
+
 ### Download Source Code
 
 ```
 git clone -b local https://github.com/hkhcoder/vprofile-project.git
 ```
+
+image of cp -r to clone
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.8.cpr-sampai-gitclone.png?raw=true)
+
+
 ### Update Configuration
 
 ```
@@ -379,11 +508,18 @@ cd vprofile-project
 ```
 vim src/main/resources/application.properties
 ```
+
+(image of script)
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.9.code-app-propert.png?raw=true)
+
 ### Build code
 
 ```
 /usr/local/maven3.9/bin/mvn install
 ```
+
+(build image)
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/4.91.vim-build.png?raw=true)
 
 ### Deploy artifact
 
@@ -406,6 +542,7 @@ chown tomcat.tomcat /usr/local/tomcat/webapps -R
 systemctl restart tomcat
 ```
 
+(image will be added later)
 
 # 5. Nginx Setup
 
@@ -424,6 +561,7 @@ sudo -i
 cat /etc/hosts
 ```
 
+
 ### update package OS
 
 ```
@@ -433,11 +571,19 @@ apt update -y
 apt upgrade -y
 ```
 
+(image from login to update OS)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/5.1.APT-UPDATE-WEB01.png?raw=true)
+
 ### Install Nginx
 
 ```
 apt install nginx -y
 ```
+
+(image of install nginx)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/5.2.install-nginx.png?raw=true)
 
 ### create nginx config file
 
@@ -463,6 +609,11 @@ server {
 }
 ```
 
+(image of editing)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/5.3.nginx-config.png?raw=true)
+
+
  ### Remove default nginx conf
 
 ```
@@ -481,4 +632,29 @@ ln -s /etc/nginx/sites-available/vproapp /etc/nginx/sites-enabled/vproapp
 systemctl restart nginx
 ```
 
+(image of delete, create link, and restart)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/5.4.last.png?raw=true)
+
 ### Finally, Open the browser and see the result
+
+**Login interface**
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.1.Tampilan-login.png?raw=true)
+
+**UI After Login**
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.2.Sudah-login.png?raw=true)
+
+**RabbitMQ Test**
+
+![alt text](?https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.3.Test-rabbit.pngraw=true)
+
+
+**Memcache Test**
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.4.test-memcache.png?raw=true)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.5.test%20memcache2.png?raw=true)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/6.6.test-memcache3.png?raw=true)

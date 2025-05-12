@@ -1,11 +1,20 @@
+![alt text](?raw=true)
 # Introduction
 
-This document provides a step-by-step guide to provision multiple services in a virtual environment using Vagrant and VirtualBox. The environment includes services like MySQL, Memcache, RabbitMQ, Tomcat, and Nginx. All services will be configured manually, in a specific order, to simulate a real production-like application infrastructure. Once the manual steps are well understood, the configured will be automated. 
+This document provides a step-by-step guide to provision multiple services in a virtual environment using Vagrant and VirtualBox. The environment includes several services like:
+**1. Mariadb**
+**2. Memcache**
+**3. RabbitMQ**
+**4. Tomcat**
+**5. Nginx.**
+All services will be configured manually, in a specific order, to simulate a real production-like application infrastructure. Once the manual steps are well understood, the configured will be automated. 
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/000.png?raw=true)
 
 # Prerequisite
-1. Oracle VM Virtualbox
-2. Vagrant
-3. Vagrant Plugins
+**1. Oracle VM Virtualbox**
+**2. Vagrant**
+**3. Vagrant Plugins**
 
 Execute below command in your computer (i'm using git bash) to install hostmanager plugin
 ```
@@ -14,10 +23,10 @@ vagrant plugin instlal vagrant-hostmanager
 4. Git Bash
 
 # VM Setup
-1. Clone Source Code `https://github.com/DitoIhkam/devops-project1`
-2. cd into the repo
-3. verify branch at `master` branch
-4. cd into vagrant/Manual_provisioning (there is a Vagrantfile)
+**1. Clone Source Code `https://github.com/DitoIhkam/devops-project1`**  
+**2. cd into the repo**  
+**3. verify branch at `master` branch**  
+**4. cd into vagrant/Manual_provisioning (there is a Vagrantfile)**  
 Bring up vm's
 ```
 varant up
@@ -26,20 +35,22 @@ varant up
 
 # Provisioning
 ### Services
-1. Nginx           => Web Service for HTTP
-2. Tomcat          => Application Server for JAVA 
-3. RabbitMQ        => Broker/Queuing Agent 
-4. Memcache        => DB Caching to speed up data access from the database
-5. MySQL           => SQL Database
+1. Nginx           => Web Service for HTTP  
+2. Tomcat          => Application Server for JAVA  
+3. RabbitMQ        => Broker/Queuing Agent  
+4. Memcache        => DB Caching to speed up data access from the database  
+5. MySQL           => SQL Database   
 
-Setup should be done in below mentioned order (SVC mean Service)
-MySQL        => Database SVC. Because all the service depends on database
-Memcache     => DB Caching SVC. Speed up caching to database
-RabbitMQ     => Broker/Queue SVC. Broker message service for app
-Tomcat       => Application SVC. running app after database, cache, and broker ready
-Nginx        => Web SVC. Last installed, since it acts as the front-facing proxy
+### Setup should be done in below mentioned order (SVC mean Service)
+MySQL        => Database SVC. Because all the service depends on database  
+Memcache     => DB Caching SVC. Speed up caching to database  
+RabbitMQ     => Broker/Queue SVC. Broker message service for app  
+Tomcat       => Application SVC. running app after database, cache, and broker ready  
+Nginx        => Web SVC. Last installed, since it acts as the front-facing proxy   
 
-(gambar flow )
+(Flow Image)
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/0.flow.png?raw=true)
+
 # 1. MySQL Setup
 ### Login to the db VM and login to user root
 
@@ -64,7 +75,10 @@ sudo dnf update -y
 sudo dnf install epel-release -y
 ```
 
-(gambar login, etc host, dan dnf update)
+
+(image of login, etc host, and dnf update)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.1.DNF-UPDATE-DB01.png?raw=true)
 
 ### Install MariaDB Package
 
@@ -72,7 +86,9 @@ sudo dnf install epel-release -y
 sudo dnf install git mariadb-server -y
 ```
 
-(gambar install mariadb)
+(image of install mariadb)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.2.Install-mariadb.png?raw=true)
 
 ### Starting & enabling mariadb-server
 
@@ -83,7 +99,10 @@ sudo systemctl start mariadb
 sudo systemctl enable mariadb
 ```
 
-(gambar start dan enable)
+(image of start dan enable mariadb)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.3.Start-enable-maria.png?raw=true)
+
 RUN mysql secure installation script to apply standard secure of mariadb
 
 ```
@@ -92,7 +111,9 @@ mysql_secure_installation
 
 NOTE: Set db root password, I will be using admin123 as password.
 
-(gambar mysql secure)
+(image of mysql secure)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.4.Mysql-secure.png?raw=true)
 
 ### Login to MySQL as root
 
@@ -117,7 +138,10 @@ FLUSH PRIVILEGES;
 ```
 exit;
 ```
-(gambar konfigurasi mysql)
+
+(image of edit configuration in mariadb)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.5.login-and-config-mariadb.png?raw=true)
 
 ### Download Source Code & Initialize Database
 
@@ -146,7 +170,10 @@ systemctl restart mariadb
 systemctl status mariadb
 ```
 
-(gamba download and initialize db)
+(image of download and initialize db)
+
+![alt text](https://github.com/DitoIhkam/devops-project1/blob/learn-devops/7.Project-Vprofile/image/1.6.Download-initDB-restart-status.png?raw=true)
+
 
 ---
 

@@ -1,0 +1,2 @@
+1. tambahin id_rsa.pub sendiri biar enak, bisa pake sync folder dan jalankan pake shell di vagrant
+2. beri nama vm masing2 di virtualbox, karna ini namanya bakal ngaco
